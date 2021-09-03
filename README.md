@@ -6,7 +6,7 @@ This is a simple job portal that can be used to embed Bullhorn jobs wherever you
 
 And add the following wherever you want your jobs to show.
 ```
-    <script type="module" src="./index.js"></script> <!-- this may need to be added somewhere else -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/portable-career-portal@0.0.2/index.js"></script> <!-- this may need to be added somewhere else -->
     <career-portal swimlane="[your swimlane]" corpToken="[your corp Token]" jobsPerPage="5" />
 ```
 

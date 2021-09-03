@@ -23,6 +23,7 @@ module.exports = {
         new CopyPlugin({
           patterns: [
             { from: "package.json" },
+            { from: "README.md" },
           ],
         }),
       ],

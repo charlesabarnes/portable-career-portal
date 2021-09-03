@@ -1,3 +1,5 @@
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 import { SearchService } from "./searchService.js";
 
 const template = document.createElement('template');
