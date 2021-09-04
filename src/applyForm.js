@@ -227,6 +227,9 @@ export class ApplyForm extends HTMLElement {
         this.element.querySelector(`.cancel`).addEventListener('click', (event) => {
             this.element.classList.remove('visible');
         });
+        this.element.querySelector(`.apply`).addEventListener('click', (event) => {
+            this.submitForm();
+        });
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -237,7 +240,11 @@ export class ApplyForm extends HTMLElement {
             this.shadowRoot.querySelector(".wrapper").classList.add("visible");
           }
         }
-      }
+    }
+
+    submitForm() {
+        const formData = new FormData(this.element.querySelector('form'));
+    }
 
 }
 
