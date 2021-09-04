@@ -8,6 +8,20 @@ const template = document.createElement('template');
 template.innerHTML = `
 <style>
 
+.navigation {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.navigation a {
+    font-weight: 700;
+    color: #2e55fa;
+    cursor: pointer;
+    margin: 20px;
+    font-size: 1.2em;
+}
+
 header {
     display: flex;
     flex-direction: row;
@@ -20,7 +34,6 @@ details {
 }
 
 summary {
-    display: inline-block;
     word-wrap: break-word;
     overflow: hidden;
     max-height: 3.4em;
@@ -112,6 +125,10 @@ footer {
 
 </style>
 <div>
+    <div class="navigation">
+        <a class="previous">Prev</a>
+        <a class="next">Next</a>
+    </div>
     <slot>
         <header>
             <h2 part="title">{{jobTitle}}</h2>
@@ -139,6 +156,7 @@ export class CareerPortal extends HTMLElement {
     searchService;
     element;
     currentJobs;
+    page;
 
     constructor() {
         super();
@@ -146,6 +164,7 @@ export class CareerPortal extends HTMLElement {
         shadowRoot.appendChild(template.content.cloneNode(true));
         this.searchService = new SearchService(this.swimlane, this.corpToken);
         this.element = shadowRoot.querySelector('div');
+        this.page = 0;
         this.setJobs();
     }
 
@@ -165,21 +184,20 @@ export class CareerPortal extends HTMLElement {
         return this.getAttribute('jobsPerPage');
     }
 
-
     async setJobs() {
-        const res = await this.searchService.getjobs('', {}, this.jobsPerPage);
+        const res = await this.searchService.getjobs('', {start: (this.page * this.jobsPerPage) + 1}, this.jobsPerPage);
         this.currentJobs = await res.json();
         this.createJobElement();
     }
 
     createJobElement() {
+        this.removeDisplayedJobs();
         this.currentJobs.data.forEach(job => {
             const jobElement = document.createElement('div');
             jobElement.setAttribute('class', 'job');
             jobElement.appendChild(this.element.querySelector('slot').cloneNode(true));
 
             const jobSummary = decode(job.publicDescription.replace(/<.*?>/g, ''));
-
             jobElement.innerHTML = jobElement.innerHTML
             .replace('{{jobTitle}}', job.title)
             .replace('{{jobCategory}}', job.publishedCategory?.name)
@@ -195,11 +213,38 @@ export class CareerPortal extends HTMLElement {
         });
     }
 
+    removeDisplayedJobs(){
+        const elements = this.element.getElementsByClassName('job');
+        while(elements.length > 0){
+            elements[0].parentNode.removeChild(elements[0]);
+        }
+    }
+
     openJob(itemId) {
         console.log(itemId);
     }
 
+    nextPage() {
+        this.page += 1;
+        this.setJobs();
+    }
+
+    previousPage() {
+        this.page -= 1;
+        this.setJobs();
+    }
+
+    updatePaginationButtons() {
+        this.element.querySelector('.next').addEventListener('click', value => {
+            this.nextPage();
+        });
+        this.element.querySelector('.previous').addEventListener('click', value => {
+            this.previousPage();
+        });
+    }
+
     connectedCallback() {
+        this.updatePaginationButtons();
     }
 }
 
