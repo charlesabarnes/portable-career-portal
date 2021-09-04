@@ -1,6 +1,6 @@
 {
   "name": "portable-career-portal",
-  "version": "0.0.3",
+  "version": "0.0.0-development",
   "description": "simple way to add jobs from Bullhorn to your website",
   "main": "index.js",
   "scripts": {
@@ -9,11 +9,12 @@
     "build-wc:clean": "rm -rf dist && mkdir dist",
     "build-wc:webpack": "webpack",
     "build-watch:webpack": "webpack --watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "semantic-release": "semantic-release"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/charlesabarnes/portable-career-portal.git"
+    "url": "https://github.com/charlesabarnes/portable-career-portal.git"
   },
   "author": "Charles Barnes",
   "license": "MIT",
@@ -27,10 +28,12 @@
     "babel-loader": "^8.2.2",
     "copy-webpack-plugin": "^9.0.1",
     "webpack": "^5.52.0",
-    "webpack-cli": "^4.8.0"
+    "webpack-cli": "^4.8.0",
+    "semantic-release": "^17.4.7"
   },
   "dependencies": {
     "core-js": "^3.17.2",
+    "he": "^1.2.0",
     "regenerator-runtime": "^0.13.9"
   }
 }
