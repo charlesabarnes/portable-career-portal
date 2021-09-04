@@ -37,6 +37,6 @@ jobs:
       - name: Publish Github Packages
         uses: JS-DevTools/npm-publish@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_PUBLISH }}
           package: ./dist/package.json
           registry: https://npm.pkg.github.com/@charlesabarnes
