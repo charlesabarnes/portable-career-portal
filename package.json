@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "npm run build-wc:clean && npm run build-wc:webpack",
+    "build:watch": "npm run build-wc:clean && npm run build-watch:webpack",
     "build-wc:clean": "rm -rf dist && mkdir dist",
     "build-wc:webpack": "webpack",
+    "build-watch:webpack": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

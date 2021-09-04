@@ -26,6 +26,21 @@ details[open] summary {
     border-bottom: 1px solid #aaa;
     margin-bottom: .5em;
 }
+
+div {
+    font-family: sans-serif;
+}
+
+div.job {
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1;
+    padding: 20px;
+    margin: 20px;
+    border-color: #F4F4F4;
+    box-shadow: 0 0 10px 0 rgb(0 24 128 / 10%);
+}
+
 </style>
 <div>
     <slot>
