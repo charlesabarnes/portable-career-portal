@@ -22,9 +22,6 @@
   "bugs": {
     "url": "https://github.com/charlesabarnes/portable-career-portal/issues"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/@charlesabarnes"
-  },
   "homepage": "https://github.com/charlesabarnes/portable-career-portal#readme",
   "devDependencies": {
     "@babel/core": "^7.15.4",
