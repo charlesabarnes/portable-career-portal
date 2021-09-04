@@ -46,17 +46,17 @@ div.job {
     <slot>
         <header>
             <h3 part="title">{{jobTitle}}</h3>
-            <span>{{jobCategory}}</span>
-            <time>{{dateLastPublished}}</time>
+            <span part="category">{{jobCategory}}</span>
+            <time part="pubDate">{{dateLastPublished}}</time>
         </header>
         <main>
-        <details>
+        <details part="details">
             <summary>{{jobSummary}}</summary>
-            <p>{{jobDescription}}</p>
+            <p part="description">{{jobDescription}}</p>
         </details>
         </main>
         <footer>
-            <button>Apply</button>
+            <button part="applyBtn">Apply</button>
         </footer>
     </slot>
 </div>
