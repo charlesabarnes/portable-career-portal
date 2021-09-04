@@ -27,8 +27,6 @@ jobs:
       - name: Version
         run: |
           npm version patch
-      - name: Push Tags
-        run: git push --follow-tags origin main
       - name: Build
         run: |
           npm run build
