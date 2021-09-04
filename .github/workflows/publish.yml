@@ -23,7 +23,7 @@ jobs:
       - name: Version
         uses: oleksiyrudenko/gha-git-credentials@v2-latest
         with:
-        token: '${{ secrets.GITHUB_TOKEN }}'
+          token: '${{ secrets.GITHUB_TOKEN }}'
         run: |
           npm version patch
       - name: Commit & Push Token
