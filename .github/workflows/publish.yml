@@ -6,7 +6,7 @@ on:
 jobs:
   build:
     name: Build & Publish
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     timeout-minutes: 25
     strategy:
       fail-fast: true
@@ -32,6 +32,8 @@ jobs:
         run: |
           npm run build:ci
       - name: Publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           cd dist
           npm publish
