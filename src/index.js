@@ -41,6 +41,18 @@ div.job {
     box-shadow: 0 0 10px 0 rgb(0 24 128 / 10%);
 }
 
+button {
+    padding: 15px 50px;
+    margin: 15px 0;
+    font-weight: 700;
+    font-size: 1.2em;
+    background-color: #47a3ff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    color: #ffffff;
+}
+
 </style>
 <div>
     <slot>
