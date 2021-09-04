@@ -1,4 +1,4 @@
-name: Release Novo Elements
+name: Release
 on:
   push:
     branches:
