@@ -1,6 +1,6 @@
 {
   "name": "portable-career-portal",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "simple way to add jobs from Bullhorn to your website",
   "main": "index.js",
   "scripts": {
@@ -23,8 +23,8 @@
     "url": "https://github.com/charlesabarnes/portable-career-portal/issues"
   },
   "publishConfig": {
-    "registry":"https://npm.pkg.github.com/@charlesabarnes"
-},
+    "registry": "https://npm.pkg.github.com/@charlesabarnes"
+  },
   "homepage": "https://github.com/charlesabarnes/portable-career-portal#readme",
   "devDependencies": {
     "@babel/core": "^7.15.4",
