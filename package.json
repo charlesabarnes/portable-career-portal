@@ -1,6 +1,6 @@
 {
   "name": "portable-career-portal",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "simple way to add jobs from Bullhorn to your website",
   "main": "index.js",
   "scripts": {
