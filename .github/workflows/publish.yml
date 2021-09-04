@@ -34,7 +34,7 @@ jobs:
           tags: true
       - name: Build
         run: |
-          npm run build:ci
+          npm run build
       - name: Publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
