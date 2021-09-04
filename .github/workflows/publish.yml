@@ -39,4 +39,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           package: ./dist/package.json
-          registry: https://npm.pkg.github.com
+          registry: https://npm.pkg.github.com/@charlesabarnes
