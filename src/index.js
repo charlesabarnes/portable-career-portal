@@ -2,6 +2,7 @@ import "core-js/stable";
 import { decode } from "he";
 import "regenerator-runtime/runtime";
 import { SearchService } from "./searchService.js";
+import * as applyForm from "./applyForm.js";
 
 const template = document.createElement('template');
 
@@ -149,6 +150,7 @@ footer {
             <button part="applyBtn">Apply</button>
         </footer>
     </slot>
+    <career-portal-apply></career-portal-apply>
 </div>
 `
 
@@ -222,6 +224,8 @@ export class CareerPortal extends HTMLElement {
 
     openJob(itemId) {
         console.log(itemId);
+        this.element.querySelector('career-portal-apply').setAttribute('jobId', itemId)
+        this.element.querySelector('career-portal-apply').setAttribute('visible', 'true')
     }
 
     nextPage() {
