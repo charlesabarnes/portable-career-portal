@@ -46,11 +46,48 @@ button {
     margin: 15px 0;
     font-weight: 700;
     font-size: 1.2em;
-    background-color: #47a3ff;
+    background-color: #e1e7ff;
     border: none;
     cursor: pointer;
     border-radius: 5px;
-    color: #ffffff;
+    color: #2e55fa;
+}
+
+button:hover {
+    background-color: #2e55fa;
+    color: #e1e7ff;
+}
+
+.chips {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.chips span {
+    line-height: 1.5;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    list-style: none;
+    box-sizing: border-box;
+    border-radius: 4px;
+    background-color: #e1e7ff;
+    font-size: 15px;
+    padding: 2px 10px;
+    display: inline-block;
+    text-align: center;
+    transition: all .5s;
+    font-family: roboto;
+    text-transform: capitalize;
+    margin-bottom: 5px;
+    color: #2e55fa;
+    margin: 10px;
+}
+
+
+footer {
+    display: flex;
+    justify-content: flex-end;
 }
 
 </style>
@@ -58,8 +95,12 @@ button {
     <slot>
         <header>
             <h3 part="title">{{jobTitle}}</h3>
-            <span part="category">{{jobCategory}}</span>
-            <time part="pubDate">{{dateLastPublished}}</time>
+            <div class="chips">
+                <span part="category">{{jobCategory}}</span>
+                <span part="employmentType">{{employmentType}}</span>
+                <span part="address">{{address}}</span>
+                <span part="pubDate">{{dateLastPublished}}</span>
+            </div>
         </header>
         <main>
         <details part="details">
@@ -123,6 +164,8 @@ export class CareerPortal extends HTMLElement {
             .replace('{{dateLastPublished}}', new Date(job.dateLastPublished).toLocaleDateString())
             .replace('{{jobSummary}}', 'View Description')
             .replace('{{jobDescription}}', job.publicDescription)
+            .replace('{{employmentType}}', job.employmentType)
+            .replace('{{address}}', `${job.address?.city}, ${job.address?.state}`)
             this.element.appendChild(jobElement);
             jobElement.querySelector('button').addEventListener('click', value => {
                 this.openJob(job.id);
