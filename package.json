@@ -11,7 +11,7 @@
     "build-watch:webpack": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "semantic-release": "semantic-release",
-    "postversion": "git push --follow-tags origin master"
+    "postversion": "git push --follow-tags origin main"
   },
   "repository": {
     "type": "git",
