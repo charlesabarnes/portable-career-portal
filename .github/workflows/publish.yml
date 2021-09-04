@@ -28,9 +28,7 @@ jobs:
         run: |
           npm version patch
       - name: Build
-        run: |
-          npm run build
-          cd dist
+        run: npm run build && cd dist
       - name: Publish
         uses: JS-DevTools/npm-publish@v1
         with:
