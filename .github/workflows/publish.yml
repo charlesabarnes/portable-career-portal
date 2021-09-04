@@ -27,12 +27,8 @@ jobs:
       - name: Version
         run: |
           npm version patch
-      - name: Commit & Push Token
-        uses: actions-js/push@v1.2
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          tags: true
-          branch: main
+      - name: Push Tags
+        run: git push --follow-tags origin main
       - name: Build
         run: |
           npm run build
