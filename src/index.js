@@ -51,7 +51,7 @@ details[open] summary {
     margin-bottom: .5em;
 }
 
-::marker {
+summary::marker {
     display: none;
     color: #2e55fa;
     content: 'view more ';
@@ -210,7 +210,7 @@ export class CareerPortal extends HTMLElement {
             .replace('{{address}}', `${job.address?.city}, ${job.address?.state}`)
             this.element.appendChild(jobElement);
             jobElement.querySelector('button').addEventListener('click', value => {
-                this.openJob(job.id);
+                this.openJob(job);
             });
         });
     }
@@ -222,9 +222,9 @@ export class CareerPortal extends HTMLElement {
         }
     }
 
-    openJob(itemId) {
-        console.log(itemId);
-        this.element.querySelector('career-portal-apply').setAttribute('jobId', itemId)
+    openJob(job) {
+        this.element.querySelector('career-portal-apply').setAttribute('id', job.id)
+        this.element.querySelector('career-portal-apply').setAttribute('title', job.title)
         this.element.querySelector('career-portal-apply').setAttribute('visible', 'true')
     }
 

@@ -148,18 +148,35 @@ button:hover {
     margin: 15px;
 }
 
+.header {
+    background-color: #e1e7ff;
+    color: #2e55fa;
+    margin: -10px;
+    margin-top: -30px;
+}
+
+.title {
+    width: 100%;
+    text-align: center;
+    font-weight: 700;
+    padding: 50px 0;
+    font-size: 25px;
+}
+
 </style>
 <div class='wrapper'>
     <div class='modal'>
-        <span class='title'>We need to add a title here</span>
+        <div class="header">
+            <h2 class='title'>Apply to {{title}}</h2>
+        </div>
         <div class='content'>
             <form>
                 <div class="input-container">
-                    <label for="firstName">First name:</label><br>
+                    <label for="firstName">First name*:</label><br>
                     <input type="text" id="firstName" name="firstName" required><br>
                 </div>
                 <div class="input-container">
-                    <label for="lastName">Last name:</label><br>
+                    <label for="lastName">Last name*:</label><br>
                     <input type="text" id="lastName" name="lastName" required><br>
                 </div>
                 <div class="input-container">
@@ -171,11 +188,11 @@ button:hover {
                     <input type="tel" id="phone" name="phone" ><br>
                 </div>
 
-
-
-            
-                <label for="resume">Resume:</label><br>
+                <div class="input-container">
+                <label for="resume" class="active">Resume*:</label><br>
                 <input type="file" name="resume" id="resume" data-feature-id="resume">
+                </div>
+
             </form> 
         </div>
         <div class='button-container'>
@@ -202,11 +219,15 @@ export class ApplyForm extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return [ 'jobId', 'visible' ];
+        return [ 'id', 'visible', 'title' ];
     }
 
     get jobId() {
-        return this.getAttribute('jobId');
+        return this.getAttribute('id');
+    }
+
+    get title() {
+        return this.getAttribute('title');
     }
 
     setFocusEvents() {
@@ -240,10 +261,17 @@ export class ApplyForm extends HTMLElement {
             this.shadowRoot.querySelector(".wrapper").classList.add("visible");
           }
         }
+        if (name === "title") {
+            this.element.innerHTML = this.element.innerHTML.replace('{{title}}', newValue);
+        }
+        this.setClickEvents();
+        this.setFocusEvents();
     }
 
     submitForm() {
         const formData = new FormData(this.element.querySelector('form'));
+        console.log(formData);
+        console.log(formData.get('firstName'));
     }
 
 }
