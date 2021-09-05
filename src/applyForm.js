@@ -1,9 +1,11 @@
+import { ApplyService } from "./applyService";
+
 const applyTemplate = document.createElement('template');
 
 applyTemplate.innerHTML = `
 <style>
 
-.wrapper {
+.wrapper, .success-wrapper {
     position: fixed;
     left: 0;
     top: 0;
@@ -22,7 +24,7 @@ applyTemplate.innerHTML = `
     transform: scale(1);
     transition: visibility 0s linear 0s,opacity .25s 0s,transform .25s;
   }
-  .modal {
+  .modal, .success {
     padding: 10px 10px 5px 10px;
     background-color: #fff;
     position: absolute;
@@ -32,6 +34,12 @@ applyTemplate.innerHTML = `
     border-radius: 2px;
     min-width: 300px;
     min-width: 50vw;
+  }
+
+  .success {
+    color: #2e55fa;
+    background-color: #e1e7ff;
+    text-align: center;
   }
 
 .input-container {
@@ -163,6 +171,10 @@ button:hover {
     font-size: 25px;
 }
 
+label b {
+    color: #DA4453;
+}
+
 </style>
 <div class='wrapper'>
     <div class='modal'>
@@ -170,26 +182,26 @@ button:hover {
             <h2 class='title'>Apply to {{title}}</h2>
         </div>
         <div class='content'>
-            <form>
+            <form enctype="multipart/form-data">
                 <div class="input-container">
-                    <label for="firstName">First name*:</label><br>
+                    <label for="firstName">First name<b>*</b></label><br>
                     <input type="text" id="firstName" name="firstName" required><br>
                 </div>
                 <div class="input-container">
-                    <label for="lastName">Last name*:</label><br>
+                    <label for="lastName">Last name<b>*</b></label><br>
                     <input type="text" id="lastName" name="lastName" required><br>
                 </div>
                 <div class="input-container">
-                    <label for="email">Email:</label><br>
+                    <label for="email">Email<b>*</b></label><br>
                     <input type="email" id="email" name="email" required><br>
                 </div>
                 <div class="input-container">
-                    <label for="phone">Mobile Phone:</label><br>
+                    <label for="phone">Mobile Phone</label><br>
                     <input type="tel" id="phone" name="phone" ><br>
                 </div>
 
                 <div class="input-container">
-                <label for="resume" class="active">Resume*:</label><br>
+                <label for="resume" class="active">Resume<b>*</b></label><br>
                 <input type="file" name="resume" id="resume" data-feature-id="resume">
                 </div>
 
@@ -201,10 +213,17 @@ button:hover {
         </div>
     </div>
 </div>
+<div class="success-wrapper">
+    <div class="success">
+        <h1>Application was Successful</h1>
+        <p>A recruiter will reach out to you shortly.</p>
+    </div>
+
+</div>
 `
 
 export class ApplyForm extends HTMLElement {
-    searchService;
+    applyService;
     element;
     currentJobs;
     page;
@@ -219,7 +238,7 @@ export class ApplyForm extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return [ 'id', 'visible', 'title' ];
+        return [ 'id', 'visible', 'title', 'corpToken', 'swimlane' ];
     }
 
     get jobId() {
@@ -228,6 +247,14 @@ export class ApplyForm extends HTMLElement {
 
     get title() {
         return this.getAttribute('title');
+    }
+
+    get corpToken() {
+        return this.getAttribute('corpToken');
+    }
+
+    get swimlane() {
+        return this.getAttribute('swimlane');
     }
 
     setFocusEvents() {
@@ -245,12 +272,13 @@ export class ApplyForm extends HTMLElement {
     }
 
     setClickEvents() {
-        this.element.querySelector(`.cancel`).addEventListener('click', (event) => {
+        this.element.querySelector(`.cancel`).onclick = (event) => {
+            event.stopPropagation();
             this.element.classList.remove('visible');
-        });
-        this.element.querySelector(`.apply`).addEventListener('click', (event) => {
+        };
+        this.element.querySelector(`.apply`).onclick = (event) => {
             this.submitForm();
-        });
+        };
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -264,14 +292,40 @@ export class ApplyForm extends HTMLElement {
         if (name === "title") {
             this.element.innerHTML = this.element.innerHTML.replace('{{title}}', newValue);
         }
+        if (name === 'swimlane' || name === 'corpToken') {
+            this.applyService = new ApplyService(this.swimlane, this.corpToken, this.element);
+        }
         this.setClickEvents();
         this.setFocusEvents();
     }
 
     submitForm() {
         const formData = new FormData(this.element.querySelector('form'));
-        console.log(formData);
-        console.log(formData.get('firstName'));
+        var data = {};
+        for (var key of formData.keys()) {
+            if (key === 'resume') {
+                const resumeData = formData.get(key);
+                data['format'] = resumeData.name.substring(resumeData.name.lastIndexOf('.') + 1)
+            } else {
+                data[key] = formData.get(key);
+            }
+        }
+        const callBack = function() {
+            this.element.classList.remove("visible");
+            this.shadowRoot.querySelector(".success-wrapper").classList.add("visible");
+            setTimeout(()=> {
+                this.shadowRoot.querySelector(".success-wrapper").classList.remove("visible");
+            }, 5000);
+        }
+
+        const failCallback = function() {
+            alert('error submitting resume. Please correct your data and try again.');
+        }
+
+        this.applyService.apply(this.jobId, data, formData, callBack.bind(this), failCallback);
+    }
+
+    connectedCallback() {
     }
 
 }

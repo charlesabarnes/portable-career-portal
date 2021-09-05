@@ -249,6 +249,8 @@ export class CareerPortal extends HTMLElement {
 
     connectedCallback() {
         this.updatePaginationButtons();
+        this.element.querySelector('career-portal-apply').setAttribute('corpToken', this.corpToken);
+        this.element.querySelector('career-portal-apply').setAttribute('swimlane', this.swimlane);
     }
 }
 
