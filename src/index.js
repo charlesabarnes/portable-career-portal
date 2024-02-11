@@ -187,7 +187,7 @@ export class CareerPortal extends HTMLElement {
     }
 
     async setJobs() {
-        const res = await this.searchService.getjobs('', {start: (this.page * this.jobsPerPage) + 1}, this.jobsPerPage);
+        const res = await this.searchService.getjobs('', {start: (this.page * this.jobsPerPage)}, this.jobsPerPage);
         this.currentJobs = await res.json();
         this.createJobElement();
     }
